@@ -1,5 +1,5 @@
 {
-  "name": "event-media-management-platform",
+  "name": "project-dev-cig",
   "version": "1.0.0",
   "main": "backend/server/index.js",
   "scripts": {
