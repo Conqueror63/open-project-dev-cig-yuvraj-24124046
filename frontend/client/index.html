@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CIG Event Media Hub</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">CLUB CONNECT IITR</p>
+        <h1>Event Media Hub</h1>
+      </div>
+      <div class="auth-controls">
+        <form id="loginForm" class="login-form">
+          <select id="loginRole" required>
+            <option value="">Choose role</option>
+            <option value="admin">Admin</option>
+            <option value="photographer">Photographer</option>
+            <option value="member">Member</option>
+            <option value="viewer">Viewer</option>
+          </select>
+          <button type="submit">Login</button>
+        </form>
+        <button id="logoutButton" class="secondary hidden">Logout</button>
+      </div>
+      <p id="loginError" class="login-error hidden"></p>
+    </header>
+
+    <main id="appMain">
+      <section class="hero-panel">
+        <div>
+          <p class="eyebrow">Centralized media management</p>
+          <h2>Upload, organize, search, and share club event memories from one place.</h2>
+          <p>
+            Built for admins, photographers, club members, and public viewers with event-wise albums,
+            role-based privacy, social actions, AI-style tagging, personalized face discovery, and watermark downloads.
+          </p>
+        </div>
+        <div class="stat-grid" id="stats"></div>
+      </section>
+
+      <section class="toolbar">
+        <label for="searchInput" class="search-label">Search with adv search</label>
+        <input id="searchInput" type="search" placeholder="Search with adv search" />
+        <select id="sortSelect">
+          <option value="date">Sort by date</option>
+          <option value="name">Sort by event name</option>
+          <option value="category">Sort by category</option>
+        </select>
+        <button id="faceButton">Find my photos</button>
+      </section>
+
+      <section class="content-grid">
+        <aside>
+          <div class="panel">
+            <h3>Create event</h3>
+            <form id="eventForm">
+              <input name="name" placeholder="Event name" required />
+              <input name="category" placeholder="Category" required />
+              <input name="date" type="date" required />
+              <textarea name="description" placeholder="Description"></textarea>
+              <select name="access">
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+              </select>
+              <small class="helper-text">Allowed roles: admin, photographer, member.</small>
+              <button type="submit">Create event</button>
+            </form>
+          </div>
+
+          <div class="panel">
+            <h3>Upload media</h3>
+            <form id="uploadForm">
+              <select name="eventId" id="eventPicker" required></select>
+              <select name="visibility">
+                <option value="public">Public media</option>
+                <option value="private">Private media</option>
+              </select>
+              <textarea name="description" placeholder="Caption or notes"></textarea>
+              <div id="dropZone" class="drop-zone">
+                <strong>Drop photos/videos here</strong>
+                <span>or click to choose files</span>
+                <input id="fileInput" type="file" multiple accept="image/*,video/*" />
+              </div>
+              <div id="previewList" class="preview-list"></div>
+              <button type="submit">Upload selected media</button>
+            </form>
+          </div>
+        </aside>
+
+        <section>
+          <div class="section-heading">
+            <h3>Events</h3>
+            <span id="currentUserLabel"></span>
+          </div>
+          <div id="eventsGrid" class="events-grid"></div>
+
+          <div class="section-heading">
+            <h3>Media gallery</h3>
+            <span id="resultCount"></span>
+          </div>
+          <div id="mediaGrid" class="media-grid"></div>
+
+          <div class="section-heading">
+            <h3>Personalized matches</h3>
+            <span id="matchCount"></span>
+          </div>
+          <div id="matchGrid" class="media-grid"></div>
+        </section>
+
+        <aside>
+          <div class="panel">
+            <h3>Reference Selfie</h3>
+            <div class="upload-panel selfie-panel">
+              <input id="selfieInput" type="file" accept="image/*" />
+              <div id="selfiePreview" class="selfie-preview">No selfie selected.</div>
+              <div class="panel-actions">
+                <button id="matchSelfieButton" class="secondary">Match uploaded selfie</button>
+                <button id="clearSelfieButton" class="secondary small hidden">Clear selfie</button>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Notifications</h3>
+              <button id="markReadButton" class="secondary small hidden">Mark all read</button>
+            </div>
+            <div id="notificationsList" class="notifications"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Analytics Dashboard</h3>
+            </div>
+            <div id="analyticsSummary" class="analytics-summary"></div>
+            <div id="analyticsCharts" class="analytics-charts"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Your favourites</h3>
+              <button id="showFavoritesButton" class="secondary">Show favorites</button>
+            </div>
+            <div id="favoritesList" class="favorites-list">No favourites yet.</div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <template id="mediaCardTemplate">
+      <article class="media-card">
+        <div class="media-thumb"></div>
+        <div class="media-body">
+          <div class="media-title-row">
+            <h4></h4>
+            <span class="badge"></span>
+          </div>
+          <p></p>
+          <div class="tags"></div>
+          <div class="caption-text"></div>
+          <div class="actions">
+            <button data-action="caption" class="secondary small">AI Caption</button>
+            <button data-action="like" class="like-button">Like</button>
+            <button data-action="favourite">Favourite</button>
+            <button data-action="download">Download</button>
+            <button data-action="delete" class="hidden danger">Delete</button>
+          </div>
+          <form class="comment-form">
+            <input name="comment" placeholder="Add a comment" />
+            <button type="submit">Comment</button>
+          </form>
+          <div class="comments"></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

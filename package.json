@@ -1,0 +1,23 @@
+{
+  "name": "event-media-management-platform",
+  "version": "1.0.0",
+  "description": "Full-stack Event and Media Management Platform for club media organization, access control, social interactions, AI-style tagging, cloud storage abstraction, and personalized photo discovery.",
+  "main": "backend/server/index.js",
+  "scripts": {
+    "start": "node backend/server/index.js",
+    "dev": "node backend/server/index.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.380.0",
+    "dotenv": "^16.0.0"
+  },
+  "keywords": [
+    "events",
+    "media",
+    "full-stack",
+    "club",
+    "gallery"
+  ],
+  "author": "CIG Development Team",
+  "license": "MIT"
+}

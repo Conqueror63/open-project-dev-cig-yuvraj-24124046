@@ -1,0 +1,357 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Aarav Mehta",
+      "email": "aarav.mehta@gmail.com",
+      "password": "demo123",
+      "role": "admin"
+    },
+    {
+      "id": "u2",
+      "name": "Nisha Rao",
+      "email": "nisha.rao@gmail.com",
+      "password": "demo123",
+      "role": "photographer"
+    },
+    {
+      "id": "u3",
+      "name": "Yuvraj Singh",
+      "email": "yuvraj.singh@gmail.com",
+      "password": "demo123",
+      "role": "member"
+    },
+    {
+      "id": "u4",
+      "name": "Guest Viewer",
+      "email": "guest.viewer@gmail.com",
+      "password": "demo123",
+      "role": "viewer"
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "name": "Photography Section IITR",
+      "category": "Trip",
+      "date": "2026-07-12",
+      "description": "Photography session at IIT Roorkee for club members with curated albums and private access.",
+      "access": "private",
+      "coverColor": "#0f766e",
+      "coverImage": "https://images.unsplash.com/photo-1470259078422-8268946a2b6e?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": "e2",
+      "name": "CIG Workshop",
+      "category": "Workshop",
+      "date": "2026-06-24",
+      "description": "Hands-on media editing and portfolio workshop for new creators.",
+      "access": "public",
+      "coverColor": "#7c3aed"
+    },
+    {
+      "id": "e3",
+      "name": "Thomso 2026",
+      "category": "Fest",
+      "date": "2026-05-18",
+      "description": "Stage performances, candid crowd moments, and aftermovie assets.",
+      "access": "public",
+      "coverColor": "#ea580c",
+      "coverImage": "https://images.unsplash.com/photo-1515169067865-5387ec356754?auto=format&fit=crop&w=900&q=80"
+    }
+  ],
+  "media": [
+    {
+      "id": "m1",
+      "eventId": "e3",
+      "name": "stage-crowd-lights.jpg",
+      "type": "photo",
+      "dataUrl": "",
+      "size": 238000,
+      "visibility": "public",
+      "description": "Main stage crowd moment",
+      "uploadedBy": "u2",
+      "uploadedByName": "Nisha Rao",
+      "uploadDate": "2026-05-18",
+      "tags": [
+        "crowd",
+        "stage",
+        "lights",
+        "festival"
+      ],
+      "caption": "Yuvraj Singh captured a memorable fest moment from Thomso 2026. Main stage crowd moment Featuring crowd, stage, lights, festival.",
+      "likes": [
+        "u1",
+        "u3"
+      ],
+      "comments": [
+        {
+          "id": "c1",
+          "userId": "u3",
+          "userName": "Yuvraj Singh",
+          "text": "Perfect cover for the album.",
+          "createdAt": "2026-05-19T11:20:00.000Z"
+        },
+        {
+          "id": "c_mq6mrj4k_wvkig",
+          "userId": "u3",
+          "userName": "Yuvraj Singh",
+          "text": "good",
+          "createdAt": "2026-06-09T12:43:03.956Z"
+        }
+      ],
+      "favourites": [
+        "u3"
+      ],
+      "taggedUsers": [
+        "u3"
+      ],
+      "storageProvider": "Local S3-compatible adapter",
+      "storageKey": "club-media/e3/stage-crowd-lights.jpg"
+    },
+    {
+      "id": "m2",
+      "eventId": "e2",
+      "name": "editing-workshop-team.jpg",
+      "type": "photo",
+      "dataUrl": "",
+      "size": 194000,
+      "visibility": "public",
+      "description": "Workshop practice table",
+      "uploadedBy": "u1",
+      "uploadedByName": "Aarav Mehta",
+      "uploadDate": "2026-06-24",
+      "tags": [
+        "workshop",
+        "learning",
+        "coding",
+        "group"
+      ],
+      "caption": "Yuvraj Singh captured a memorable workshop moment from CIG Workshop. Workshop practice table Featuring workshop, learning, coding, group.",
+      "likes": [
+        "u2",
+        "u3"
+      ],
+      "comments": [
+        {
+          "id": "c_mq6muz15_5wt3b",
+          "userId": "u3",
+          "userName": "Yuvraj Singh",
+          "text": "cig",
+          "createdAt": "2026-06-09T12:45:44.537Z"
+        }
+      ],
+      "favourites": [],
+      "taggedUsers": [],
+      "storageProvider": "Local S3-compatible adapter",
+      "storageKey": "club-media/e2/editing-workshop-team.jpg"
+    },
+    {
+      "id": "m3",
+      "eventId": "e1",
+      "name": "yuvraj-portrait-mountain.jpg",
+      "type": "photo",
+      "dataUrl": "",
+      "size": 287000,
+      "visibility": "private",
+      "description": "Member portrait during the trip",
+      "uploadedBy": "u2",
+      "uploadedByName": "Nisha Rao",
+      "uploadDate": "2026-07-12",
+      "tags": [
+        "travel",
+        "outdoor",
+        "mountains",
+        "portrait"
+      ],
+      "caption": "Yuvraj Singh captured a memorable trip moment from Photography Section IITR. Member portrait during the trip Featuring travel, outdoor, mountains, portrait.",
+      "likes": [],
+      "comments": [],
+      "favourites": [
+        "u3"
+      ],
+      "taggedUsers": [
+        "u3"
+      ],
+      "storageProvider": "Local S3-compatible adapter",
+      "storageKey": "club-media/e1/yuvraj-portrait-mountain.jpg"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "n_mq709x6c_4rq4u",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": false,
+      "createdAt": "2026-06-09T19:01:16.982Z"
+    },
+    {
+      "id": "n_mq6op62j_6986q",
+      "userId": "u2",
+      "message": "Nisha Rao tagged you in Screenshot 2026-06-09 180024.png",
+      "read": false,
+      "createdAt": "2026-06-09T13:37:12.955Z"
+    },
+    {
+      "id": "n_mq6nlep1_65pfl",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T13:06:17.896Z"
+    },
+    {
+      "id": "n_mq6mynf9_gghgq",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked yuvraj-portrait-mountain.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:48:36.117Z"
+    },
+    {
+      "id": "n_mq6myjn2_khru2",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:48:31.214Z"
+    },
+    {
+      "id": "n_mq6myj26_lhcgt",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:48:30.462Z"
+    },
+    {
+      "id": "n_mq6myhy0_b6o17",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:48:29.018Z"
+    },
+    {
+      "id": "n_mq6muz16_moyu1",
+      "userId": "u1",
+      "message": "Yuvraj Singh commented on editing-workshop-team.jpg",
+      "read": false,
+      "createdAt": "2026-06-09T12:45:44.538Z"
+    },
+    {
+      "id": "n_mq6mulza_hmssm",
+      "userId": "u1",
+      "message": "Yuvraj Singh liked editing-workshop-team.jpg",
+      "read": false,
+      "createdAt": "2026-06-09T12:45:27.622Z"
+    },
+    {
+      "id": "n_mq6mug27_iuh0z",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:45:19.951Z"
+    },
+    {
+      "id": "n_mq6mufcp_fr0le",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:45:19.033Z"
+    },
+    {
+      "id": "n_mq6mueh9_vxg9e",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:45:17.902Z"
+    },
+    {
+      "id": "n_mq6mrmk0_9sg4n",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:43:08.400Z"
+    },
+    {
+      "id": "n_mq6mrj4k_bozho",
+      "userId": "u2",
+      "message": "Yuvraj Singh commented on stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:43:03.956Z"
+    },
+    {
+      "id": "n_mq6mre4k_yvj2t",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:42:57.478Z"
+    },
+    {
+      "id": "n_mq6mr76u_5604p",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:42:48.487Z"
+    },
+    {
+      "id": "n_mq6mp05o_1avh0",
+      "userId": "u1",
+      "message": "Yuvraj Singh liked editing-workshop-team.jpg",
+      "read": false,
+      "createdAt": "2026-06-09T12:41:06.060Z"
+    },
+    {
+      "id": "n_mq6movvr_oeeae",
+      "userId": "u1",
+      "message": "Yuvraj Singh liked editing-workshop-team.jpg",
+      "read": false,
+      "createdAt": "2026-06-09T12:41:00.519Z"
+    },
+    {
+      "id": "n_mq6mosyu_4roed",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:40:56.742Z"
+    },
+    {
+      "id": "n_mq6morf7_k3crr",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:40:54.741Z"
+    },
+    {
+      "id": "n_mq6mka9w_gxklo",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:37:25.892Z"
+    },
+    {
+      "id": "n_mq6mka3r_vwx50",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:37:25.671Z"
+    },
+    {
+      "id": "n_mq6mk9oa_uzcaq",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:37:25.114Z"
+    },
+    {
+      "id": "n_mq6mk825_ozcn3",
+      "userId": "u2",
+      "message": "Yuvraj Singh liked stage-crowd-lights.jpg",
+      "read": true,
+      "createdAt": "2026-06-09T12:37:23.022Z"
+    },
+    {
+      "id": "n1",
+      "userId": "u3",
+      "message": "Nisha Rao tagged you in yuvraj-portrait-mountain.jpg",
+      "read": false,
+      "createdAt": "2026-07-12T14:00:00.000Z"
+    }
+  ]
+}

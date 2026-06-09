@@ -1,0 +1,7 @@
+node_modules/
+*.log
+.env
+.env.local
+
+required-deliverables/docs/node_modules/
+required-deliverables/presentation/build/
