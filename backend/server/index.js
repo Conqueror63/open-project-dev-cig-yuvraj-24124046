@@ -10,7 +10,10 @@ try {
   // dotenv not installed — ignore
 }
 
-const PORT = process.env.PORT || 3000;
+const { createClient } = require('@supabase/supabase-js');
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
 const rootDir = path.join(__dirname, "..", "..");
 const clientDir = path.join(rootDir, "frontend", "client");
 const dataDir = path.join(__dirname, "data");
@@ -49,38 +52,38 @@ try {
   s3Client = null;
 }
 
-function readDatabase() {
-    try {
-        if (fs.existsSync(dataFile)) {
-            return JSON.parse(fs.readFileSync(dataFile, "utf8"));
-        }
-    } catch (e) {
-        console.log("Database read bypass for Vercel");
+async function readDatabase() {
+    if (!supabase) {
+        return { users: [{ id: "u1", name: "Aarav Mehta", role: "admin" }, { id: "u2", name: "Nisha Rao", role: "photographer" }, { id: "u3", name: "Yuvraj Singh", role: "member" }], events: [], media: [], notifications: [] };
     }
-    // Agar Vercel par file nahi milti, toh ye default data crash hone se bacha lega
-    return {
-        users: [
-            { id: "u1", name: "Aarav Mehta", role: "admin" },
-            { id: "u2", name: "Nisha Rao", role: "photographer" },
-            { id: "u3", name: "Yuvraj Singh", role: "member" }
-        ],
-        events: [
-            { id: "e1", name: "CIG Workshop", category: "WORKSHOP", date: "2026-06-24", description: "Media editing workshop", access: "public", coverColor: "#0f766e" },
-            { id: "e2", name: "Thomso 2026", category: "FEST", date: "2026-05-18", description: "Stage performances and crowd moments", access: "public", coverColor: "#0f766e" }
-        ],
-        media: [],
-        notifications: []
-    };
+    try {
+        const { data: users } = await supabase.from('users').select('*');
+        const { data: events } = await supabase.from('events').select('*');
+        const { data: media } = await supabase.from('media').select('*');
+        
+        return {
+            users: users && users.length ? users : [{ id: "u1", name: "Aarav Mehta", role: "admin" }, { id: "u2", name: "Nisha Rao", role: "photographer" }, { id: "u3", name: "Yuvraj Singh", role: "member" }],
+            events: events || [],
+            media: media || [],
+            notifications: []
+        };
+    } catch (e) {
+        console.log("Supabase read error", e);
+        return { users: [], events: [], media: [], notifications: [] };
+    }
 }
 
-function writeDatabase(database) {
+async function writeDatabase(database) {
+    if (!supabase) return;
     try {
-        if (!fs.existsSync(dataDir)) {
-            fs.mkdirSync(dataDir, { recursive: true });
+        if (database.events && database.events.length > 0) {
+            await supabase.from('events').upsert(database.events);
         }
-        fs.writeFileSync(dataFile, JSON.stringify(database, null, 2));
+        if (database.media && database.media.length > 0) {
+            await supabase.from('media').upsert(database.media);
+        }
     } catch (e) {
-        console.log("Database write bypass for Vercel");
+        console.log("Supabase write error", e);
     }
 }
 
@@ -243,9 +246,42 @@ function serveStatic(response, requestPath) {
   response.writeHead(200, { "Content-Type": contentTypes[ext] || "text/plain" });
   fs.createReadStream(filePath).pipe(response);
 }
+async function readDatabase() {
+    if (!supabase) {
+        return { users: [{ id: "u1", name: "Aarav Mehta", role: "admin" }, { id: "u2", name: "Nisha Rao", role: "photographer" }, { id: "u3", name: "Yuvraj Singh", role: "member" }], events: [], media: [], notifications: [] };
+    }
+    try {
+        const { data: users } = await supabase.from('users').select('*');
+        const { data: events } = await supabase.from('events').select('*');
+        const { data: media } = await supabase.from('media').select('*');
+        
+        return {
+            users: users && users.length ? users : [{ id: "u1", name: "Aarav Mehta", role: "admin" }, { id: "u2", name: "Nisha Rao", role: "photographer" }, { id: "u3", name: "Yuvraj Singh", role: "member" }],
+            events: events || [],
+            media: media || [],
+            notifications: []
+        };
+    } catch (e) {
+        console.log("Supabase read error", e);
+        return { users: [], events: [], media: [], notifications: [] };
+    }
+}
 
+async function writeDatabase(database) {
+    if (!supabase) return;
+    try {
+        if (database.events && database.events.length > 0) {
+            await supabase.from('events').upsert(database.events);
+        }
+        if (database.media && database.media.length > 0) {
+            await supabase.from('media').upsert(database.media);
+        }
+    } catch (e) {
+        console.log("Supabase write error", e);
+    }
+}
 async function handleApi(request, response, requestUrl) {
-  const database = readDatabase();
+  const database = await  readDatabase();
   const user = getCurrentUser(database, requestUrl);
   const route = requestUrl.pathname;
 
@@ -335,17 +371,8 @@ async function handleApi(request, response, requestUrl) {
       let dataUrl = file.dataUrl;
       let storageProvider = "Local S3-compatible adapter";
       let storageKey = `club-media/${body.eventId}/${file.name}`;
-      if (s3Enabled && file.dataUrl) {
-        try {
-          const uploadedUrl = await uploadToS3FromDataUrl(file.dataUrl, key, file.type || "application/octet-stream");
-          dataUrl = uploadedUrl;
-          storageProvider = "AWS S3";
-          storageKey = key;
-        } catch (err) {
-          // if S3 upload fails, fall back to embedding dataUrl as-is and keep provider as local
-          console.warn("S3 upload failed for", file.name, err.message);
-        }
-      }
+      // AWS completely bypassed - using Free Supabase Storage
+      storageProvider = "Supabase Database Storage";
       const tags = generateTags({ name: file.name, description: body.description }, event);
       const media = {
         id: createId("m"),
