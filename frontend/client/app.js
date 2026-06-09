@@ -48,8 +48,21 @@ async function api(path, options = {}) {
     headers: { "Content-Type": "application/json" },
     ...options
   });
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.message || "Request failed");
+
+  const text = await response.text();
+  let data = {};
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch (error) {
+      throw new Error(`Invalid JSON response from ${path}: ${text.slice(0, 200)}`);
+    }
+  }
+
+  if (!response.ok) {
+    throw new Error(data.message || response.statusText || "Request failed");
+  }
+
   return data;
 }
 
