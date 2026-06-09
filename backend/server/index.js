@@ -50,11 +50,38 @@ try {
 }
 
 function readDatabase() {
-  return JSON.parse(fs.readFileSync(dataFile, "utf8"));
+    try {
+        if (fs.existsSync(dataFile)) {
+            return JSON.parse(fs.readFileSync(dataFile, "utf8"));
+        }
+    } catch (e) {
+        console.log("Database read bypass for Vercel");
+    }
+    // Agar Vercel par file nahi milti, toh ye default data crash hone se bacha lega
+    return {
+        users: [
+            { id: "u1", name: "Aarav Mehta", role: "admin" },
+            { id: "u2", name: "Nisha Rao", role: "photographer" },
+            { id: "u3", name: "Yuvraj Singh", role: "member" }
+        ],
+        events: [
+            { id: "e1", name: "CIG Workshop", category: "WORKSHOP", date: "2026-06-24", description: "Media editing workshop", access: "public", coverColor: "#0f766e" },
+            { id: "e2", name: "Thomso 2026", category: "FEST", date: "2026-05-18", description: "Stage performances and crowd moments", access: "public", coverColor: "#0f766e" }
+        ],
+        media: [],
+        notifications: []
+    };
 }
 
 function writeDatabase(database) {
-  fs.writeFileSync(dataFile, JSON.stringify(database, null, 2));
+    try {
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
+        fs.writeFileSync(dataFile, JSON.stringify(database, null, 2));
+    } catch (e) {
+        console.log("Database write bypass for Vercel");
+    }
 }
 
 function sendJson(response, statusCode, payload) {
@@ -466,15 +493,26 @@ async function handleApi(request, response, requestUrl) {
 
   return sendJson(response, 404, { message: "API route not found." });
 }
+try {
+    if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+    }
+    if (!fs.existsSync(dataFile)) {
+        fs.writeFileSync(dataFile, JSON.stringify({ users: [], events: [], media: [], notifications: [] }));
+    }
+} catch (e) {
+    console.log("Read-only folder bypass for Vercel");
+}
 
 const server = http.createServer((request, response) => {
-  const requestUrl = new URL(request.url, `http://${request.headers.host}`);
-  if (requestUrl.pathname.startsWith("/api/")) {
-    handleApi(request, response, requestUrl).catch(error => sendJson(response, 500, { message: error.message }));
-    return;
-  }
-  serveStatic(response, requestUrl.pathname);
+    const requestUrl = new URL(request.url, `http://${request.headers.host}`);
+    if (requestUrl.pathname.startsWith("/api/")) {
+        handleApi(request, response, requestUrl).catch(error => sendJson(response, 500, {message: error.message}));
+        return;
+    }
+    serveStatic(response, requestUrl.pathname);
 });
+
 
 server.on("error", err => {
   if (err.code === "EADDRINUSE") {
